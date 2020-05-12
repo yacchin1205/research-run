@@ -1,9 +1,12 @@
 FROM yacchin1205/research-notebook:20200512
 
+USER root
+
 # Copy local code to the container image.
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
+RUN mv ./notebooks/* ./
 
 # Install production dependencies.
 RUN pip install Flask gunicorn
