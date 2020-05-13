@@ -11,6 +11,9 @@ RUN mv ./notebooks/* ./
 # Install production dependencies.
 RUN pip install Flask gunicorn
 
+# Prepare files
+RUN if [ -f "./prepare.ipynb" ]; then papermill ./prepare.ipynb -; fi
+
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
 # For environments with multiple CPU cores, increase the number of workers
