@@ -1,4 +1,4 @@
-FROM yacchin1205/research-notebook:20200512
+FROM yacchin1205/research-notebook:latest
 
 USER root
 
