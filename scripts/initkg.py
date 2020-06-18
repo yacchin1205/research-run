@@ -18,7 +18,7 @@ stdout_logfile_maxbytes = 0
 stderr_logfile = /dev/stderr
 stderr_logfile_maxbytes = 0
 
-command=jupyter kernelgateway --KernelGatewayApp.api='kernel_gateway.notebook_http' --KernelGatewayApp.port={port} --KernelGatewayApp.seed_uri='{path}' --KernelGatewayApp.prespawn_count={prespawn_count}
+command=jupyter kernelgateway --debug --KernelGatewayApp.api='kernel_gateway.notebook_http' --KernelGatewayApp.port={port} --KernelGatewayApp.seed_uri='{path}' --KernelGatewayApp.prespawn_count={prespawn_count}
         '''.format(filebody=filebody, port=port, prespawn_count=prespawn_count,
                    path=os.path.join(app_dir, notebook_filename)))
     with open(os.path.join(app_dir, '.{}.kg.port'.format(filebody)), 'w') as f:

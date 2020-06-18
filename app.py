@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import subprocess
 from tempfile import NamedTemporaryFile
 import yaml
@@ -45,7 +46,7 @@ def proxy(notebook=None, path=None):
     if port is None:
         return { 'exists': False }
     url = 'http://localhost:{}/{}'.format(port, path)
-    retries = 3
+    retries = 5
     resp = None
     sleep_sec = 3
     while retries > 0:
@@ -54,10 +55,18 @@ def proxy(notebook=None, path=None):
                 resp = requests.post(url, json=request.get_json())
             else:
                 resp = requests.get(url)
+            if resp.status_code == 500:
+                print('Retrying... status={}, body={}'.format(resp.status_code, resp.text))
+                sys.stdout.flush()
+                time.sleep(sleep_sec)
+                sleep_sec *= 2
+                retries -= 1
+                continue
             break
         except ConnectionError:
             traceback.print_exc()
             print('Retrying... sleep', sleep_sec)
+            sys.stdout.flush()
             time.sleep(sleep_sec)
             sleep_sec *= 2
             retries -= 1
