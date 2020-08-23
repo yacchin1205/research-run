@@ -18,5 +18,6 @@ RUN mv ./notebooks/* ./ && mv ./scripts/* / && \
 
 # Prepare files
 RUN if [ -f "./prepare.ipynb" ]; then papermill ./prepare.ipynb -; fi
+RUN cd /; curl -O http://compling.hss.ntu.edu.sg/wnja/data/1.1/wnjpn.db.gz && gunzip wnjpn.db.gz
 
 CMD /start.sh
